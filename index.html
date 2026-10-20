@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حروفي ستور | كتب وقوالب رقمية</title>
+<meta name="theme-color" content="#6D1A22">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--primary:#6D1A22;--primary-dark:#4F1119;--gold:#C9A227;--gold-dark:#8B6914;--cream:#FBF7F2;--cream-dark:#F4E6DC;--text:#2B1810;--muted:#7A5C50;--border:#EFE2D6}
+  body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text);line-height:1.7}
+  
+  /* Header */
+  header{background:rgba(255,255,255,.96);border-bottom:1px solid var(--border);padding:12px 20px;position:sticky;top:0;z-index:50}
+  .header-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:800;font-size:19px;color:var(--primary)}
+  .currency-switcher{display:flex;background:var(--cream-dark);border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+  .currency-btn{background:none;border:none;padding:6px 12px;font-family:inherit;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer}
+  .currency-btn.active{background:var(--primary);color:#fff}
+  
+  /* Hero & Products */
+  .hero{padding:40px 20px;text-align:center;background:linear-gradient(160deg,var(--cream),var(--cream-dark))}
+  .hero h1{font-size:clamp(24px,4vw,36px);font-weight:900;color:var(--primary);margin-bottom:10px}
+  .container{max-width:1200px;margin:0 auto;padding:30px 20px}
+  .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+  
+  .card{background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--border);display:flex;flex-direction:column;position:relative}
+  .card-media{width:100%;aspect-ratio:4/3;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .card-media img{width:100%;height:100%;object-fit:cover}
+  .card-media .placeholder{font-size:56px}
+  .badge-discount{position:absolute;top:10px;left:10px;background:var(--primary);color:var(--gold);font-size:12px;font-weight:800;padding:5px 11px;border-radius:20px}
+  .badge-soon{position:absolute;top:10px;right:10px;background:#F5E5C9;color:var(--gold-dark);font-size:11px;padding:4px 10px;border-radius:20px}
+  
+  .card-body{padding:14px;display:flex;flex-direction:column;flex:1;gap:8px}
+  .card-title{font-size:15px;font-weight:700;min-height:42px}
+  .card-desc{font-size:12px;color:var(--muted);flex:1}
+  .price-row{display:flex;align-items:center;gap:10px}
+  .price-old{font-size:13px;color:#A88F81;text-decoration:line-through}
+  .price-new{font-size:18px;font-weight:800;color:var(--primary)}
+  .btn-buy{background:var(--primary);color:#fff;border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer;width:100%;margin-top:auto}
+  .btn-buy:disabled{background:#D8CCC2}
+
+  /* Footer */
+  footer{background:#2B1810;color:#C4AFA0;padding:20px;text-align:center;font-size:13px}
+  footer strong{color:var(--gold)}
+  .site-link{display:inline-block;margin-top:10px;color:#fff;text-decoration:none;background:rgba(255,255,255,0.1);padding:6px 12px;border-radius:6px}
+
+  /* Modals */
+  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;padding:16px;overflow-y:auto}
+  .modal.open{display:flex;align-items:flex-start;justify-content:center}
+  .modal-content{background:#fff;border-radius:16px;max-width:560px;width:100%;margin:20px auto;overflow:hidden}
+  .modal-head{background:var(--primary);color:#fff;padding:15px;display:flex;justify-content:space-between;align-items:center}
+  .modal-close{background:none;border:none;color:#fff;font-size:24px;cursor:pointer}
+  .modal-body{padding:20px}
+  
+  .admin-tab{flex:1;padding:12px;background:#f4f4f4;border:none;font-weight:bold;cursor:pointer}
+  .admin-tab.active{background:var(--primary);color:#fff}
+  .admin-list-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee}
+  .form-group{margin-bottom:10px}
+  .form-group label{display:block;font-size:12px;font-weight:bold;margin-bottom:4px}
+  .form-group input, .form-group textarea, .form-group select{width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;font-family:inherit}
+  .btn-save{background:var(--primary);color:#fff;border:none;padding:10px;border-radius:8px;width:100%;font-weight:bold;cursor:pointer;margin-top:10px}
+  .btn-add{background:#16a34a;color:#fff;border:none;padding:10px;border-radius:8px;width:100%;font-weight:bold;cursor:pointer;margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo" id="logoTrigger">
+      <span style="font-size:28px;">✏️</span> حروفي ستور
+    </div>
+    <div class="currency-switcher">
+      <button class="currency-btn" data-curr="USD">USD $</button>
+      <button class="currency-btn" data-curr="SAR">SAR ر.س</button>
+      <button class="currency-btn" data-curr="YER">YER ر.ي</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>كتب وقوالب رقمية تصنع الفرق</h1>
+  <p style="color:var(--muted)">اختر منتجك وأكمل الدفع بسهولة</p>
+</section>
+
+<div class="container">
+  <div class="products-grid" id="productsGrid"></div>
+</div>
+
+<footer>
+  © 2025 <strong>حروفي ستور</strong> — إعداد وتصميم الدكتور/ هاني حسين المخرفي
+  <br>
+  <a href="#" class="site-link" id="siteUrlLink">رابط الموقع</a>
+</footer>
+
+<!-- نافذة الدفع -->
+<div class="modal" id="paymentModal">
+  <div class="modal-content">
+    <div class="modal-head"><h3>💳 إتمام الشراء</h3><button class="modal-close" onclick="closePayment()">×</button></div>
+    <div class="modal-body">
+      <p><strong>المنتج:</strong> <span id="pmName"></span></p>
+      <p><strong>السعر:</strong> <span id="pmPrice" style="color:var(--primary); font-size:20px; font-weight:bold;"></span></p>
+      <hr style="margin:15px 0; border:0; border-top:1px solid #eee;">
+      <p style="font-size:13px; margin-bottom:10px;">حوّل المبلغ إلى إحدى المحافظ:</p>
+      <div style="display:flex; gap:10px;">
+        <div style="flex:1; background:#f9f9f9; padding:10px; text-align:center; border-radius:8px;">
+          <strong>جيب</strong><br>771164862<br><button onclick="copyNum('771164862', this)" style="margin-top:5px; cursor:pointer;">📋 نسخ</button>
+        </div>
+        <div style="flex:1; background:#f9f9f9; padding:10px; text-align:center; border-radius:8px;">
+          <strong>الكريمي</strong><br>771164862<br><button onclick="copyNum('771164862', this)" style="margin-top:5px; cursor:pointer;">📋 نسخ</button>
+        </div>
+      </div>
+      <form id="orderForm" style="margin-top:15px;">
+        <div class="form-group"><label>الاسم *</label><input type="text" id="o_name" required></div>
+        <div class="form-group"><label>رقم الواتساب *</label><input type="tel" id="o_phone" required></div>
+        <div class="form-group"><label>صورة الإيصال *</label><input type="file" id="o_receipt" accept="image/*" required></div>
+        <button type="submit" class="btn-save" style="background:#25D366;">إرسال الطلب عبر واتساب</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- لوحة الإدارة -->
+<div class="modal" id="adminModal">
+  <div class="modal-content" style="max-width:600px;">
+    <div class="modal-head"><h3>🔒 الإدارة</h3><button class="modal-close" onclick="closeAdmin()">×</button></div>
+    <div style="display:flex;">
+      <button class="admin-tab active" onclick="switchTab('list')">المنتجات</button>
+      <button class="admin-tab" onclick="switchTab('settings')">الإعدادات</button>
+    </div>
+    <div class="modal-body">
+      
+      <!-- قائمة المنتجات -->
+      <div id="tab-list">
+        <button class="btn-add" onclick="addNewProduct()">➕ إضافة منتج جديد</button>
+        <div id="adminList" style="max-height:300px; overflow-y:auto; margin-bottom:15px;"></div>
+        <button class="btn-save" onclick="generateCode()" style="background:#16a34a;">📋 نسخ كود النشر</button>
+        <textarea id="codeText" readonly style="width:100%; height:80px; margin-top:10px; display:none; font-size:10px;"></textarea>
+      </div>
+
+      <!-- الإعدادات -->
+      <div id="tab-settings" style="display:none;">
+        <div class="form-group"><label>اللون الأساسي</label><input type="color" id="set_primary" style="height:40px;"></div>
+        <div class="form-group"><label>سعر صرف الريال السعودي (مقابل الدولار)</label><input type="number" id="set_sar" step="0.1"></div>
+        <div class="form-group"><label>سعر صرف الريال اليمني (مقابل الدولار)</label><input type="number" id="set_yer" step="1"></div>
+        <button class="btn-save" onclick="saveSettings()">💾 حفظ الإعدادات</button>
+      </div>
+
+      <!-- تعديل منتج -->
+      <div id="tab-edit" style="display:none;">
+        <button onclick="switchTab('list')" style="background:none;border:none;cursor:pointer;margin-bottom:10px;">&rarr; رجوع</button>
+        <div class="form-group"><label>اسم المنتج</label><input type="text" id="f_name"></div>
+        <div class="form-group"><label>الوصف</label><textarea id="f_desc" rows="2"></textarea></div>
+        <div class="form-group"><label>رفع صورة من الجوال</label><input type="file" id="f_file" accept="image/*"></div>
+        <div class="form-group"><label>أو رابط الصورة</label><input type="text" id="f_url"></div>
+        <div style="display:flex; gap:10px;">
+          <div class="form-group" style="flex:1;"><label>السعر القديم ($)</label><input type="number" id="f_old"></div>
+          <div class="form-group" style="flex:1;"><label>السعر الجديد ($)</label><input type="number" id="f_new"></div>
+        </div>
+        <button class="btn-save" onclick="saveProduct()">💾 حفظ المنتج</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// الإعدادات الافتراضية
+const DEFAULT_SETTINGS = { currency:'USD', rateSAR:3.75, rateYER:250, primary:'#6D1A22' };
+let settings = JSON.parse(localStorage.getItem('huroofi_settings')) || DEFAULT_SETTINGS;
+
+const DEFAULT_PRODUCTS = [
+  {id:1, name:"كتاب تعلم الحروف", desc:"كتاب PDF للطلاب المبتدئين.", image:"", emoji:"📘", oldPrice:25, newPrice:20, filled:true},
+  {id:2, name:"قالب سيرة ذاتية", desc:"قالب احترافي قابل للتعديل.", image:"", emoji:"📄", oldPrice:12, newPrice:6, filled:true},
+  {id:3, name:"قالب Notion", desc:"لإدارة العمل الحر.", image:"", emoji:"📊", oldPrice:10, newPrice:5, filled:true}
+];
+for(let i=4; i<=20; i++) DEFAULT_PRODUCTS.push({id:i, name:"", desc:"", image:"", emoji:"📦", oldPrice:0, newPrice:0, filled:false});
+let products = JSON.parse(localStorage.getItem('huroofi_products')) || DEFAULT_PRODUCTS;
+
+// تهيئة الموقع
+document.getElementById('siteUrlLink').href = window.location.href;
+document.getElementById('siteUrlLink').textContent = window.location.hostname;
+
+function applyTheme() {
+  document.documentElement.style.setProperty('--primary', settings.primary);
+}
+applyTheme();
+
+function changeCurrency(curr) {
+  settings.currency = curr;
+  localStorage.setItem('huroofi_settings', JSON.stringify(settings));
+  document.querySelectorAll('.currency-btn').forEach(b => b.classList.toggle('active', b.dataset.curr === curr));
+  renderProducts();
+}
+
+function formatPrice(usd) {
+  let val = usd;
+  let sym = '$';
+  if(settings.currency === 'SAR') { val = usd * settings.rateSAR; sym = 'ر.س'; }
+  if(settings.currency === 'YER') { val = usd * settings.rateYER; sym = 'ر.ي'; }
+  return `${val.toFixed(settings.currency === 'YER' ? 0 : 2)} ${sym}`;
+}
+
+document.querySelectorAll('.currency-btn').forEach(b => {
+  b.classList.toggle('active', b.dataset.curr === settings.currency);
+  b.onclick = () => changeCurrency(b.dataset.curr);
+});
+
+// عرض المنتجات
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = products.map(p => {
+    const disc = (p.filled && p.oldPrice > p.newPrice) ? Math.round((1 - p.newPrice/p.oldPrice)*100) : 0;
+    const img = p.image ? `<img src="${p.image}">` : `<div class="placeholder">${p.emoji}</div>`;
+    return `
+      <div class="card">
+        <div class="card-media">${img}
+          ${disc>0?`<span class="badge-discount">-${disc}%</span>`:''}
+          ${!p.filled?`<span class="badge-soon">قريبًا</span>`:''}
+        </div>
+        <div class="card-body">
+          <div class="card-title">${p.filled?p.name:'منتج قريبًا'}</div>
+          <div class="card-desc">${p.filled?p.desc:'...'}</div>
+          <div class="price-row">
+            ${p.filled && p.oldPrice>p.newPrice?`<span class="price-old">${formatPrice(p.oldPrice)}</span>`:''}
+            <span class="price-new">${p.filled?formatPrice(p.newPrice):'—'}</span>
+          </div>
+          <button class="btn-buy" onclick="openPayment(${p.id})" ${!p.filled?'disabled':''}>${p.filled?'اشترِ الآن':'قريبًا'}</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+renderProducts();
+
+// الدفع
+let curProduct = null;
+function openPayment(id) {
+  curProduct = products.find(p => p.id === id);
+  document.getElementById('pmName').textContent = curProduct.name;
+  document.getElementById('pmPrice').textContent = formatPrice(curProduct.newPrice);
+  document.getElementById('orderForm').reset();
+  document.getElementById('paymentModal').classList.add('open');
+}
+function closePayment() { document.getElementById('paymentModal').classList.remove('open'); }
+function copyNum(n, b) { navigator.clipboard.writeText(n).then(()=>{ b.textContent='✅'; setTimeout(()=>b.textContent='📋 نسخ',2000); }); }
+
+document.getElementById('orderForm').onsubmit = async function(e) {
+  e.preventDefault();
+  const file = document.getElementById('o_receipt').files[0];
+  const msg = `🌟 طلب جديد\nالمنتج: ${curProduct.name}\nالسعر: ${formatPrice(curProduct.newPrice)}\nالاسم: ${document.getElementById('o_name').value}\nالهاتف: ${document.getElementById('o_phone').value}`;
+  
+  if(navigator.canShare && navigator.canShare({files:[file]})) {
+    try { await navigator.share({files:[file], text:msg}); closePayment(); } 
+    catch(err) { window.open(`https://wa.me/967771164862?text=${encodeURIComponent(msg)}`); closePayment(); }
+  } else {
+    window.open(`https://wa.me/967771164862?text=${encodeURIComponent(msg)}`);
+    closePayment();
+  }
+};
+
+// الإدارة
+let clicks = 0, timer;
+document.getElementById('logoTrigger').onclick = () => {
+  clicks++;
+  clearTimeout(timer);
+  timer = setTimeout(() => clicks = 0, 1500);
+  if(clicks >= 5) { openAdmin(); clicks = 0; }
+};
+
+function openAdmin() { document.getElementById('adminModal').classList.add('open'); switchTab('list'); renderAdminList(); }
+function closeAdmin() { document.getElementById('adminModal').classList.remove('open'); }
+function switchTab(t) {
+  ['list','settings','edit'].forEach(x => document.getElementById('tab-'+x).style.display = 'none');
+  document.getElementById('tab-'+t).style.display = 'block';
+  if(t === 'settings') {
+    document.getElementById('set_primary').value = settings.primary;
+    document.getElementById('set_sar').value = settings.rateSAR;
+    document.getElementById('set_yer').value = settings.rateYER;
+  }
+}
+
+function renderAdminList() {
+  document.getElementById('adminList').innerHTML = products.map(p => `
+    <div class="admin-list-item">
+      <span>${p.filled ? p.name : 'مكان فارغ #'+p.id}</span>
+      <button onclick="editProduct(${p.id})" style="padding:5px 10px; cursor:pointer;">تعديل</button>
+    </div>
+  `).join('');
+}
+
+let editId = null;
+function editProduct(id) {
+  editId = id;
+  const p = products.find(x => x.id === id);
+  document.getElementById('f_name').value = p.name;
+  document.getElementById('f_desc').value = p.desc;
+  document.getElementById('f_url').value = p.image;
+  document.getElementById('f_old').value = p.oldPrice || '';
+  document.getElementById('f_new').value = p.newPrice || '';
+  switchTab('edit');
+}
+
+document.getElementById('f_file').onchange = function(e) {
+  const reader = new FileReader();
+  reader.onload = ev => document.getElementById('f_url').value = ev.target.result;
+  reader.readAsDataURL(e.target.files[0]);
+};
+
+function addNewProduct() {
+  const empty = products.find(x => !x.filled);
+  if(empty) editProduct(empty.id);
+  else alert('كل الأماكن ممتلئة!');
+}
+
+function saveProduct() {
+  const p = products.find(x => x.id === editId);
+  p.name = document.getElementById('f_name').value;
+  p.desc = document.getElementById('f_desc').value;
+  p.image = document.getElementById('f_url').value;
+  p.oldPrice = parseFloat(document.getElementById('f_old').value) || 0;
+  p.newPrice = parseFloat(document.getElementById('f_new').value) || 0;
+  p.filled = (p.name && p.newPrice > 0);
+  localStorage.setItem('huroofi_products', JSON.stringify(products));
+  renderProducts(); renderAdminList(); switchTab('list');
+  alert('تم الحفظ!');
+}
+
+function saveSettings() {
+  settings.primary = document.getElementById('set_primary').value;
+  settings.rateSAR = parseFloat(document.getElementById('set_sar').value);
+  settings.rateYER = parseFloat(document.getElementById('set_yer').value);
+  localStorage.setItem('huroofi_settings', JSON.stringify(settings));
+  applyTheme(); renderProducts(); alert('تم حفظ الإعدادات!');
+}
+
+function generateCode() {
+  const code = `const DEFAULT_PRODUCTS = ${JSON.stringify(products)};\nconst DEFAULT_SETTINGS = ${JSON.stringify(settings)};`;
+  const ta = document.getElementById('codeText');
+  ta.value = code; ta.style.display = 'block'; ta.select();
+  document.execCommand('copy');
+  alert('تم نسخ الكود!');
+}
+</script>
+</body>
+</html>

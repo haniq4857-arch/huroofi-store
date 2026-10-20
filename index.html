@@ -3,187 +3,281 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>حروفي ستور | كتب وقوالب رقمية</title>
-<meta name="theme-color" content="#6D1A22">
+<title>حروفي ستور | استثمر في نفسك</title>
+<meta name="description" content="منتجات رقمية احترافية تصنع الفرق في تعلّمك وعملك.">
+<meta name="theme-color" content="#6D1A22" id="themeColorMeta">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%236D1A22'/><text x='28' y='44' font-family='Tajawal,Arial' font-size='34' font-weight='800' fill='white' text-anchor='middle'>ح</text><path d='M38 40 Q48 38 54 30 Q57 24 56 18' stroke='%23C9A227' stroke-width='3' fill='none' stroke-linecap='round'/></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  :root{--primary:#6D1A22;--primary-dark:#4F1119;--gold:#C9A227;--gold-dark:#8B6914;--cream:#FBF7F2;--cream-dark:#F4E6DC;--text:#2B1810;--muted:#7A5C50;--border:#EFE2D6}
-  body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text);line-height:1.7}
+  :root {
+    --primary: #6D1A22; --primary-dark: #4F1119; --gold: #C9A227; --gold-dark: #8B6914;
+    --cream: #FBF7F2; --cream-dark: #F4E6DC; --text: #2B1810; --muted: #7A5C50;
+    --border: #EFE2D6; --radius: 16px; --shadow: 0 4px 20px rgba(109, 26, 34, 0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Tajawal', sans-serif; background: var(--cream); color: var(--text); line-height: 1.7; overflow-x: hidden; }
   
-  /* Header */
-  header{background:rgba(255,255,255,.96);border-bottom:1px solid var(--border);padding:12px 20px;position:sticky;top:0;z-index:50}
-  .header-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-  .logo{display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:800;font-size:19px;color:var(--primary)}
-  .currency-switcher{display:flex;background:var(--cream-dark);border-radius:8px;overflow:hidden;border:1px solid var(--border)}
-  .currency-btn{background:none;border:none;padding:6px 12px;font-family:inherit;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer}
-  .currency-btn.active{background:var(--primary);color:#fff}
-  
-  /* Hero & Products */
-  .hero{padding:40px 20px;text-align:center;background:linear-gradient(160deg,var(--cream),var(--cream-dark))}
-  .hero h1{font-size:clamp(24px,4vw,36px);font-weight:900;color:var(--primary);margin-bottom:10px}
-  .container{max-width:1200px;margin:0 auto;padding:30px 20px}
-  .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
-  
-  .card{background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--border);display:flex;flex-direction:column;position:relative}
-  .card-media{width:100%;aspect-ratio:4/3;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;overflow:hidden}
-  .card-media img{width:100%;height:100%;object-fit:cover}
-  .card-media .placeholder{font-size:56px}
-  .badge-discount{position:absolute;top:10px;left:10px;background:var(--primary);color:var(--gold);font-size:12px;font-weight:800;padding:5px 11px;border-radius:20px}
-  .badge-soon{position:absolute;top:10px;right:10px;background:#F5E5C9;color:var(--gold-dark);font-size:11px;padding:4px 10px;border-radius:20px}
-  
-  .card-body{padding:14px;display:flex;flex-direction:column;flex:1;gap:8px}
-  .card-title{font-size:15px;font-weight:700;min-height:42px}
-  .card-desc{font-size:12px;color:var(--muted);flex:1}
-  .price-row{display:flex;align-items:center;gap:10px}
-  .price-old{font-size:13px;color:#A88F81;text-decoration:line-through}
-  .price-new{font-size:18px;font-weight:800;color:var(--primary)}
-  .btn-buy{background:var(--primary);color:#fff;border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer;width:100%;margin-top:auto}
-  .btn-buy:disabled{background:#D8CCC2}
+  /* التنقل بين الصفحات */
+  .page { display: none; animation: fadeIn 0.4s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* Footer */
-  footer{background:#2B1810;color:#C4AFA0;padding:20px;text-align:center;font-size:13px}
-  footer strong{color:var(--gold)}
-  .site-link{display:inline-block;margin-top:10px;color:#fff;text-decoration:none;background:rgba(255,255,255,0.1);padding:6px 12px;border-radius:6px}
+  /* ================= الهيدر ================= */
+  header { background: rgba(255, 255, 255, 0.98); border-bottom: 1px solid var(--border); padding: 12px 20px; position: sticky; top: 0; z-index: 50; }
+  .header-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 800; font-size: 20px; color: var(--primary); }
+  .currency-switcher { display: flex; background: var(--cream-dark); border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+  .currency-btn { background: none; border: none; padding: 8px 14px; font-family: inherit; font-size: 13px; font-weight: 700; color: var(--muted); cursor: pointer; }
+  .currency-btn.active { background: var(--primary); color: #fff; }
 
-  /* Modals */
-  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;padding:16px;overflow-y:auto}
-  .modal.open{display:flex;align-items:flex-start;justify-content:center}
-  .modal-content{background:#fff;border-radius:16px;max-width:560px;width:100%;margin:20px auto;overflow:hidden}
-  .modal-head{background:var(--primary);color:#fff;padding:15px;display:flex;justify-content:space-between;align-items:center}
-  .modal-close{background:none;border:none;color:#fff;font-size:24px;cursor:pointer}
-  .modal-body{padding:20px}
+  /* ================= الواجهة (الصفحة 1) ================= */
+  .hero { padding: 60px 20px; text-align: center; background: linear-gradient(160deg, var(--cream), var(--cream-dark)); border-bottom: 1px solid var(--border); }
+  .hero h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 900; color: var(--primary); margin-bottom: 15px; }
+  .hero p { font-size: clamp(15px, 2vw, 18px); color: var(--muted); max-width: 700px; margin: 0 auto; }
+
+  /* قسم التحفيز */
+  .motivation { background: #fff; padding: 40px 20px; border-bottom: 1px solid var(--border); }
+  .motivation-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; text-align: center; }
+  .mot-box { padding: 25px; background: var(--cream); border-radius: 15px; border: 1px solid var(--border); }
+  .mot-box .icon { font-size: 40px; margin-bottom: 10px; }
+  .mot-box h3 { color: var(--primary); margin-bottom: 8px; font-size: 18px; }
+  .mot-box p { font-size: 14px; color: var(--muted); }
+
+  /* المنتجات */
+  .container { max-width: 1200px; margin: 0 auto; padding: 50px 20px; }
+  .section-title { text-align: center; margin-bottom: 40px; }
+  .section-title h2 { font-size: 28px; font-weight: 900; color: var(--primary); }
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; }
+  .card { background: #fff; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); display: flex; flex-direction: column; transition: 0.3s; position: relative; }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(109, 26, 34, 0.15); }
+  .card-media { width: 100%; aspect-ratio: 4/3; background: var(--cream-dark); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .card-media img { width: 100%; height: 100%; object-fit: cover; }
+  .card-media .placeholder { font-size: 60px; }
+  .badge-discount { position: absolute; top: 12px; left: 12px; background: var(--primary); color: var(--gold); padding: 6px 12px; border-radius: 20px; font-weight: 800; font-size: 13px; }
+  .card-body { padding: 18px; display: flex; flex-direction: column; flex: 1; }
+  .card-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+  .card-desc { font-size: 13px; color: var(--muted); margin-bottom: 15px; flex: 1; }
+  .price-row { display: flex; gap: 10px; margin-bottom: 15px; }
+  .price-old { font-size: 14px; color: #A88F81; text-decoration: line-through; }
+  .price-new { font-size: 20px; font-weight: 900; color: var(--primary); }
+  .btn-buy { background: var(--primary); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 800; cursor: pointer; transition: 0.2s; }
+  .btn-buy:hover { background: var(--primary-dark); }
+
+  /* ================= صفحة الدفع (الصفحة 2) ================= */
+  .checkout-header { background: #fff; padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 15px; }
+  .back-btn { background: none; border: 1px solid var(--border); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 700; color: var(--primary); font-family: inherit; }
+  .checkout-container { max-width: 650px; margin: 40px auto; padding: 0 20px; }
+  .pay-card { background: #fff; border-radius: 16px; padding: 25px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+  .pay-product-info { display: flex; justify-content: space-between; align-items: center; background: var(--cream); padding: 15px; border-radius: 12px; margin-bottom: 25px; }
+  .wallet-box { background: #fff; border: 2px dashed var(--border); padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
+  .wallet-box h4 { color: var(--muted); margin-bottom: 5px; }
+  .wallet-name { font-size: 18px; font-weight: 900; color: var(--primary); margin-bottom: 10px; } /* اسم المستلم */
+  .wallet-number { font-family: monospace; font-size: 22px; font-weight: 900; color: var(--text); background: var(--cream-dark); display: inline-block; padding: 5px 15px; border-radius: 8px; margin-bottom: 10px; direction: ltr; }
   
-  .admin-tab{flex:1;padding:12px;background:#f4f4f4;border:none;font-weight:bold;cursor:pointer}
-  .admin-tab.active{background:var(--primary);color:#fff}
-  .admin-list-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee}
-  .form-group{margin-bottom:10px}
-  .form-group label{display:block;font-size:12px;font-weight:bold;margin-bottom:4px}
-  .form-group input, .form-group textarea, .form-group select{width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;font-family:inherit}
-  .btn-save{background:var(--primary);color:#fff;border:none;padding:10px;border-radius:8px;width:100%;font-weight:bold;cursor:pointer;margin-top:10px}
-  .btn-add{background:#16a34a;color:#fff;border:none;padding:10px;border-radius:8px;width:100%;font-weight:bold;cursor:pointer;margin-bottom:10px}
+  .form-group { margin-bottom: 15px; }
+  .form-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 14px; }
+  .form-group input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; }
+  .btn-submit-wa { background: #25D366; color: #fff; border: none; padding: 15px; border-radius: 10px; width: 100%; font-family: inherit; font-size: 16px; font-weight: 800; cursor: pointer; display: flex; justify-content: center; gap: 10px; }
+
+  /* ================= صفحة النجاح ================= */
+  .success-container { max-width: 500px; margin: 80px auto; text-align: center; padding: 40px; background: #fff; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+  .success-icon { font-size: 70px; margin-bottom: 20px; }
+
+  /* ================= لوحة الإدارة ================= */
+  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100; padding: 15px; overflow-y: auto; }
+  .modal.open { display: flex; align-items: flex-start; justify-content: center; }
+  .modal-content { background: #fff; border-radius: var(--radius); max-width: 550px; width: 100%; margin: 20px auto; }
+  .modal-header { background: var(--primary); color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; }
+  .modal-body { padding: 20px; display: none; }
+  .admin-tabs { display: flex; border-bottom: 1px solid var(--border); }
+  .admin-tab { flex: 1; padding: 15px; background: #f9f9f9; border: none; font-weight: bold; cursor: pointer; font-family: inherit; }
+  .admin-tab.active { background: #fff; color: var(--primary); border-bottom: 2px solid var(--primary); }
+  .admin-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid var(--border); }
+  .btn-save { background: var(--primary); color: #fff; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; margin-top: 10px; font-family: inherit; }
+  .btn-add { background: #16a34a; color: #fff; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; margin-bottom: 15px; font-family: inherit; }
+
+  /* الفوتر */
+  footer { background: #2B1810; color: #C4AFA0; padding: 30px; text-align: center; margin-top: 50px; }
+  footer strong { color: var(--gold); }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="logo" id="logoTrigger">
-      <span style="font-size:28px;">✏️</span> حروفي ستور
+<!-- ================= الصفحة 1: المتجر ================= -->
+<div id="view-store" class="page active">
+  <header>
+    <div class="header-inner">
+      <div class="logo" id="logoTrigger">
+        <svg width="40" height="40" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="var(--primary)"/><text x="28" y="44" font-family="Tajawal" font-size="34" font-weight="800" fill="#fff" text-anchor="middle">ح</text><path d="M 38 40 Q 48 38 54 30 Q 57 24 56 18" stroke="var(--gold)" stroke-width="3" fill="none"/></svg>
+        حروفي ستور
+      </div>
+      <div class="currency-switcher">
+        <button class="currency-btn" data-curr="USD">USD $</button>
+        <button class="currency-btn" data-curr="SAR">SAR ر.س</button>
+        <button class="currency-btn" data-curr="YER">YER ر.ي</button>
+      </div>
     </div>
-    <div class="currency-switcher">
-      <button class="currency-btn" data-curr="USD">USD $</button>
-      <button class="currency-btn" data-curr="SAR">SAR ر.س</button>
-      <button class="currency-btn" data-curr="YER">YER ر.ي</button>
+  </header>
+
+  <section class="hero">
+    <h1>استثمر في نفسك اليوم، <br><span style="color:var(--gold-dark)">واصنع فرقاً حقيقياً في مستقبلك</span></h1>
+    <p>لا تدع الوقت يمر دون أن تطور مهاراتك. منتجاتنا الرقمية صُممت باحترافية لتوفر عليك شهوراً من الجهد، وتضعك في المقدمة. ابدأ رحلتك الآن بضغطة زر.</p>
+  </section>
+
+  <!-- قسم الكلام التحفيزي -->
+  <section class="motivation">
+    <div class="motivation-grid">
+      <div class="mot-box">
+        <div class="icon">🚀</div>
+        <h3>انطلق بقوة</h3>
+        <p>محتوى يختصر عليك الطريق، ويعطيك خلاصة الخبرة في ملفات جاهزة للاستخدام الفوري.</p>
+      </div>
+      <div class="mot-box">
+        <div class="icon">💎</div>
+        <h3>جودة تستحق أموالك</h3>
+        <p>لن تدفع مقابل شيء عادي. كل منتج هنا مصمم بعناية ليمنحك قيمة حقيقية تفخر بها.</p>
+      </div>
+      <div class="mot-box">
+        <div class="icon">⚡</div>
+        <h3>لا تنتظر طويلاً</h3>
+        <p>بمجرد تأكيد الدفع، ستحصل على منتجك في ثوانٍ. لأن وقتك أثمن من أن يضيع في الانتظار.</p>
+      </div>
     </div>
+  </section>
+
+  <div class="container">
+    <div class="section-title"><h2>اختر استثمارك القادم</h2></div>
+    <div class="products-grid" id="productsGrid"></div>
   </div>
-</header>
 
-<section class="hero">
-  <h1>كتب وقوالب رقمية تصنع الفرق</h1>
-  <p style="color:var(--muted)">اختر منتجك وأكمل الدفع بسهولة</p>
-</section>
-
-<div class="container">
-  <div class="products-grid" id="productsGrid"></div>
+  <footer>
+    © 2025 <strong>حروفي ستور</strong> — إعداد وتصميم الدكتور/ هاني حسين المخرفي
+  </footer>
 </div>
 
-<footer>
-  © 2025 <strong>حروفي ستور</strong> — إعداد وتصميم الدكتور/ هاني حسين المخرفي
-  <br>
-  <a href="#" class="site-link" id="siteUrlLink">رابط الموقع</a>
-</footer>
+<!-- ================= الصفحة 2: الدفع ================= -->
+<div id="view-checkout" class="page">
+  <div class="checkout-header">
+    <button class="back-btn" onclick="showPage('store')">&rarr; العودة للمتجر</button>
+    <h3 style="color:var(--primary);">إتمام الطلب</h3>
+  </div>
 
-<!-- نافذة الدفع -->
-<div class="modal" id="paymentModal">
-  <div class="modal-content">
-    <div class="modal-head"><h3>💳 إتمام الشراء</h3><button class="modal-close" onclick="closePayment()">×</button></div>
-    <div class="modal-body">
-      <p><strong>المنتج:</strong> <span id="pmName"></span></p>
-      <p><strong>السعر:</strong> <span id="pmPrice" style="color:var(--primary); font-size:20px; font-weight:bold;"></span></p>
-      <hr style="margin:15px 0; border:0; border-top:1px solid #eee;">
-      <p style="font-size:13px; margin-bottom:10px;">حوّل المبلغ إلى إحدى المحافظ:</p>
-      <div style="display:flex; gap:10px;">
-        <div style="flex:1; background:#f9f9f9; padding:10px; text-align:center; border-radius:8px;">
-          <strong>جيب</strong><br>771164862<br><button onclick="copyNum('771164862', this)" style="margin-top:5px; cursor:pointer;">📋 نسخ</button>
+  <div class="checkout-container">
+    <div class="pay-card">
+      <div class="pay-product-info">
+        <div>
+          <h4 id="pmName" style="color:var(--primary); font-size: 18px;">اسم المنتج</h4>
+          <p style="font-size: 13px; color: var(--muted);">منتج رقمي - تسليم فوري</p>
         </div>
-        <div style="flex:1; background:#f9f9f9; padding:10px; text-align:center; border-radius:8px;">
-          <strong>الكريمي</strong><br>771164862<br><button onclick="copyNum('771164862', this)" style="margin-top:5px; cursor:pointer;">📋 نسخ</button>
-        </div>
+        <div id="pmPrice" style="font-size: 24px; font-weight: 900; color: var(--primary);">$0</div>
       </div>
-      <form id="orderForm" style="margin-top:15px;">
-        <div class="form-group"><label>الاسم *</label><input type="text" id="o_name" required></div>
-        <div class="form-group"><label>رقم الواتساب *</label><input type="tel" id="o_phone" required></div>
-        <div class="form-group"><label>صورة الإيصال *</label><input type="file" id="o_receipt" accept="image/*" required></div>
-        <button type="submit" class="btn-save" style="background:#25D366;">إرسال الطلب عبر واتساب</button>
+
+      <p style="margin-bottom: 15px; font-weight: 700;">1. حوّل المبلغ إلى إحدى المحافظ التالية:</p>
+      
+      <div class="wallet-box">
+        <h4>محفظة جيب / بنك الكريمي</h4>
+        <div class="wallet-name">هاني حسين محمد صالح قاسم</div>
+        <div class="wallet-number">771164862</div><br>
+        <button class="btn-buy" style="padding: 8px 20px; font-size: 13px;" onclick="copyText('771164862', this)">📋 نسخ الرقم</button>
+      </div>
+
+      <p style="margin-bottom: 15px; font-weight: 700;">2. أرسل لنا إيصال التحويل:</p>
+      
+      <form id="orderForm">
+        <div class="form-group">
+          <label>اسمك الكريم *</label>
+          <input type="text" id="c_name" required placeholder="حتى نعرف لمن نرسل المنتج">
+        </div>
+        <div class="form-group">
+          <label>رقم الواتساب *</label>
+          <input type="tel" id="c_phone" required placeholder="لإرسال رابط التحميل">
+        </div>
+        <div class="form-group">
+          <label>صورة إيصال التحويل *</label>
+          <input type="file" id="c_receipt" accept="image/*" required>
+        </div>
+        <button type="submit" class="btn-submit-wa">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.2.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.2-1.4c1.4.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+          تأكيد وإرسال عبر واتساب
+        </button>
       </form>
     </div>
   </div>
 </div>
 
-<!-- لوحة الإدارة -->
+<!-- ================= الصفحة 3: النجاح ================= -->
+<div id="view-success" class="page">
+  <div class="success-container">
+    <div class="success-icon">🎉</div>
+    <h2 style="color: var(--primary); margin-bottom: 10px;">خطوة رائعة!</h2>
+    <p style="color: var(--muted); margin-bottom: 30px;">لقد فتحنا لك واتساب مع تفاصيل طلبك. فقط اضغط "إرسال" في واتساب، وسنقوم بالتحقق وتزويدك برابط التحميل فوراً.</p>
+    <button class="btn-buy" onclick="showPage('store')">العودة للمتجر</button>
+  </div>
+</div>
+
+<!-- ================= لوحة الإدارة (مخفية) ================= -->
 <div class="modal" id="adminModal">
-  <div class="modal-content" style="max-width:600px;">
-    <div class="modal-head"><h3>🔒 الإدارة</h3><button class="modal-close" onclick="closeAdmin()">×</button></div>
-    <div style="display:flex;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>⚙️ الإدارة السرية</h3>
+      <button onclick="closeModal('adminModal')" style="background:none;border:none;color:#fff;font-size:24px;">×</button>
+    </div>
+    <div class="admin-tabs">
       <button class="admin-tab active" onclick="switchTab('list')">المنتجات</button>
       <button class="admin-tab" onclick="switchTab('settings')">الإعدادات</button>
     </div>
-    <div class="modal-body">
-      
-      <!-- قائمة المنتجات -->
-      <div id="tab-list">
-        <button class="btn-add" onclick="addNewProduct()">➕ إضافة منتج جديد</button>
-        <div id="adminList" style="max-height:300px; overflow-y:auto; margin-bottom:15px;"></div>
-        <button class="btn-save" onclick="generateCode()" style="background:#16a34a;">📋 نسخ كود النشر</button>
-        <textarea id="codeText" readonly style="width:100%; height:80px; margin-top:10px; display:none; font-size:10px;"></textarea>
-      </div>
+    
+    <div class="modal-body" id="tab-list" style="display:block;">
+      <button class="btn-add" onclick="addNewProduct()">➕ إضافة منتج جديد</button>
+      <div id="adminList" style="max-height: 300px; overflow-y: auto; margin-bottom: 15px;"></div>
+      <button class="btn-save" onclick="generatePublishCode()" style="background:#16a34a;">📋 نسخ كود النشر</button>
+      <textarea id="publishCode" style="width:100%; height:80px; display:none; margin-top:10px; font-size:10px;"></textarea>
+    </div>
 
-      <!-- الإعدادات -->
-      <div id="tab-settings" style="display:none;">
-        <div class="form-group"><label>اللون الأساسي</label><input type="color" id="set_primary" style="height:40px;"></div>
-        <div class="form-group"><label>سعر صرف الريال السعودي (مقابل الدولار)</label><input type="number" id="set_sar" step="0.1"></div>
-        <div class="form-group"><label>سعر صرف الريال اليمني (مقابل الدولار)</label><input type="number" id="set_yer" step="1"></div>
-        <button class="btn-save" onclick="saveSettings()">💾 حفظ الإعدادات</button>
-      </div>
+    <div class="modal-body" id="tab-settings">
+      <div class="form-group"><label>اللون الأساسي</label><input type="color" id="setPrimaryColor" style="height:40px;"></div>
+      <div class="form-group"><label>سعر صرف الريال السعودي</label><input type="number" id="setRateSAR"></div>
+      <div class="form-group"><label>سعر صرف الريال اليمني</label><input type="number" id="setRateYER"></div>
+      <button class="btn-save" onclick="saveSettings()">حفظ الإعدادات</button>
+    </div>
 
-      <!-- تعديل منتج -->
-      <div id="tab-edit" style="display:none;">
-        <button onclick="switchTab('list')" style="background:none;border:none;cursor:pointer;margin-bottom:10px;">&rarr; رجوع</button>
-        <div class="form-group"><label>اسم المنتج</label><input type="text" id="f_name"></div>
-        <div class="form-group"><label>الوصف</label><textarea id="f_desc" rows="2"></textarea></div>
-        <div class="form-group"><label>رفع صورة من الجوال</label><input type="file" id="f_file" accept="image/*"></div>
-        <div class="form-group"><label>أو رابط الصورة</label><input type="text" id="f_url"></div>
-        <div style="display:flex; gap:10px;">
-          <div class="form-group" style="flex:1;"><label>السعر القديم ($)</label><input type="number" id="f_old"></div>
-          <div class="form-group" style="flex:1;"><label>السعر الجديد ($)</label><input type="number" id="f_new"></div>
-        </div>
-        <button class="btn-save" onclick="saveProduct()">💾 حفظ المنتج</button>
+    <div class="modal-body" id="tab-edit">
+      <button onclick="switchTab('list')" style="border:none; background:none; cursor:pointer; margin-bottom:10px;">&rarr; رجوع</button>
+      <div class="form-group"><label>اسم المنتج</label><input type="text" id="f_name"></div>
+      <div class="form-group"><label>الوصف</label><textarea id="f_desc" rows="2" style="width:100%;"></textarea></div>
+      <div class="form-group"><label>رفع صورة</label><input type="file" id="f_file" accept="image/*"></div>
+      <div class="form-group"><label>أو رابط الصورة</label><input type="text" id="f_url"></div>
+      <div style="display:flex; gap:10px;">
+        <div class="form-group" style="flex:1;"><label>السعر القديم ($)</label><input type="number" id="f_old"></div>
+        <div class="form-group" style="flex:1;"><label>السعر الجديد ($)</label><input type="number" id="f_new"></div>
       </div>
-
+      <button class="btn-save" onclick="saveProduct()">حفظ المنتج</button>
     </div>
   </div>
 </div>
 
 <script>
 // الإعدادات الافتراضية
-const DEFAULT_SETTINGS = { currency:'USD', rateSAR:3.75, rateYER:250, primary:'#6D1A22' };
+const DEFAULT_SETTINGS = { currency: 'USD', rateSAR: 3.75, rateYER: 250, primaryColor: '#6D1A22' };
 let settings = JSON.parse(localStorage.getItem('huroofi_settings')) || DEFAULT_SETTINGS;
 
 const DEFAULT_PRODUCTS = [
-  {id:1, name:"كتاب تعلم الحروف", desc:"كتاب PDF للطلاب المبتدئين.", image:"", emoji:"📘", oldPrice:25, newPrice:20, filled:true},
-  {id:2, name:"قالب سيرة ذاتية", desc:"قالب احترافي قابل للتعديل.", image:"", emoji:"📄", oldPrice:12, newPrice:6, filled:true},
-  {id:3, name:"قالب Notion", desc:"لإدارة العمل الحر.", image:"", emoji:"📊", oldPrice:10, newPrice:5, filled:true}
+  {id:1, name:"كتاب تعلم كتابة الحروف الإنجليزية", desc:"كتاب PDF للطلاب المبتدئين مع تمارين تتبع.", image:"", emoji:"📘", oldPrice:25, newPrice:20, filled:true},
+  {id:2, name:"حزمة قوالب سيرة ذاتية", desc:"3 قوالب احترافية قابلة للتعديل.", image:"", emoji:"📄", oldPrice:12, newPrice:6, filled:true},
+  {id:3, name:"قالب Notion لإدارة العمل الحر", desc:"نظّم عملاءك ومشاريعك.", image:"", emoji:"📊", oldPrice:10, newPrice:5, filled:true}
 ];
 for(let i=4; i<=20; i++) DEFAULT_PRODUCTS.push({id:i, name:"", desc:"", image:"", emoji:"📦", oldPrice:0, newPrice:0, filled:false});
 let products = JSON.parse(localStorage.getItem('huroofi_products')) || DEFAULT_PRODUCTS;
 
-// تهيئة الموقع
-document.getElementById('siteUrlLink').href = window.location.href;
-document.getElementById('siteUrlLink').textContent = window.location.hostname;
+// التنقل بين الصفحات
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('view-' + pageId).classList.add('active');
+  window.scrollTo(0, 0);
+}
 
 function applyTheme() {
-  document.documentElement.style.setProperty('--primary', settings.primary);
+  document.documentElement.style.setProperty('--primary', settings.primaryColor);
 }
 applyTheme();
 
@@ -195,8 +289,7 @@ function changeCurrency(curr) {
 }
 
 function formatPrice(usd) {
-  let val = usd;
-  let sym = '$';
+  let val = usd, sym = '$';
   if(settings.currency === 'SAR') { val = usd * settings.rateSAR; sym = 'ر.س'; }
   if(settings.currency === 'YER') { val = usd * settings.rateYER; sym = 'ر.ي'; }
   return `${val.toFixed(settings.currency === 'YER' ? 0 : 2)} ${sym}`;
@@ -207,7 +300,6 @@ document.querySelectorAll('.currency-btn').forEach(b => {
   b.onclick = () => changeCurrency(b.dataset.curr);
 });
 
-// عرض المنتجات
 function renderProducts() {
   const grid = document.getElementById('productsGrid');
   grid.innerHTML = products.map(p => {
@@ -215,132 +307,28 @@ function renderProducts() {
     const img = p.image ? `<img src="${p.image}">` : `<div class="placeholder">${p.emoji}</div>`;
     return `
       <div class="card">
-        <div class="card-media">${img}
-          ${disc>0?`<span class="badge-discount">-${disc}%</span>`:''}
-          ${!p.filled?`<span class="badge-soon">قريبًا</span>`:''}
-        </div>
+        <div class="card-media">${img}${disc>0?`<span class="badge-discount">-${disc}%</span>`:''}</div>
         <div class="card-body">
-          <div class="card-title">${p.filled?p.name:'منتج قريبًا'}</div>
+          <div class="card-title">${p.filled?p.name:'منتج قادم قريبًا'}</div>
           <div class="card-desc">${p.filled?p.desc:'...'}</div>
           <div class="price-row">
             ${p.filled && p.oldPrice>p.newPrice?`<span class="price-old">${formatPrice(p.oldPrice)}</span>`:''}
             <span class="price-new">${p.filled?formatPrice(p.newPrice):'—'}</span>
           </div>
-          <button class="btn-buy" onclick="openPayment(${p.id})" ${!p.filled?'disabled':''}>${p.filled?'اشترِ الآن':'قريبًا'}</button>
+          <button class="btn-buy" onclick="startCheckout(${p.id})" ${!p.filled?'disabled':''}>${p.filled?'اشترِ الآن':'قريبًا'}</button>
         </div>
       </div>`;
   }).join('');
 }
 renderProducts();
 
-// الدفع
 let curProduct = null;
-function openPayment(id) {
+function startCheckout(id) {
   curProduct = products.find(p => p.id === id);
   document.getElementById('pmName').textContent = curProduct.name;
   document.getElementById('pmPrice').textContent = formatPrice(curProduct.newPrice);
   document.getElementById('orderForm').reset();
-  document.getElementById('paymentModal').classList.add('open');
-}
-function closePayment() { document.getElementById('paymentModal').classList.remove('open'); }
-function copyNum(n, b) { navigator.clipboard.writeText(n).then(()=>{ b.textContent='✅'; setTimeout(()=>b.textContent='📋 نسخ',2000); }); }
-
-document.getElementById('orderForm').onsubmit = async function(e) {
-  e.preventDefault();
-  const file = document.getElementById('o_receipt').files[0];
-  const msg = `🌟 طلب جديد\nالمنتج: ${curProduct.name}\nالسعر: ${formatPrice(curProduct.newPrice)}\nالاسم: ${document.getElementById('o_name').value}\nالهاتف: ${document.getElementById('o_phone').value}`;
-  
-  if(navigator.canShare && navigator.canShare({files:[file]})) {
-    try { await navigator.share({files:[file], text:msg}); closePayment(); } 
-    catch(err) { window.open(`https://wa.me/967771164862?text=${encodeURIComponent(msg)}`); closePayment(); }
-  } else {
-    window.open(`https://wa.me/967771164862?text=${encodeURIComponent(msg)}`);
-    closePayment();
-  }
-};
-
-// الإدارة
-let clicks = 0, timer;
-document.getElementById('logoTrigger').onclick = () => {
-  clicks++;
-  clearTimeout(timer);
-  timer = setTimeout(() => clicks = 0, 1500);
-  if(clicks >= 5) { openAdmin(); clicks = 0; }
-};
-
-function openAdmin() { document.getElementById('adminModal').classList.add('open'); switchTab('list'); renderAdminList(); }
-function closeAdmin() { document.getElementById('adminModal').classList.remove('open'); }
-function switchTab(t) {
-  ['list','settings','edit'].forEach(x => document.getElementById('tab-'+x).style.display = 'none');
-  document.getElementById('tab-'+t).style.display = 'block';
-  if(t === 'settings') {
-    document.getElementById('set_primary').value = settings.primary;
-    document.getElementById('set_sar').value = settings.rateSAR;
-    document.getElementById('set_yer').value = settings.rateYER;
-  }
+  showPage('checkout');
 }
 
-function renderAdminList() {
-  document.getElementById('adminList').innerHTML = products.map(p => `
-    <div class="admin-list-item">
-      <span>${p.filled ? p.name : 'مكان فارغ #'+p.id}</span>
-      <button onclick="editProduct(${p.id})" style="padding:5px 10px; cursor:pointer;">تعديل</button>
-    </div>
-  `).join('');
-}
-
-let editId = null;
-function editProduct(id) {
-  editId = id;
-  const p = products.find(x => x.id === id);
-  document.getElementById('f_name').value = p.name;
-  document.getElementById('f_desc').value = p.desc;
-  document.getElementById('f_url').value = p.image;
-  document.getElementById('f_old').value = p.oldPrice || '';
-  document.getElementById('f_new').value = p.newPrice || '';
-  switchTab('edit');
-}
-
-document.getElementById('f_file').onchange = function(e) {
-  const reader = new FileReader();
-  reader.onload = ev => document.getElementById('f_url').value = ev.target.result;
-  reader.readAsDataURL(e.target.files[0]);
-};
-
-function addNewProduct() {
-  const empty = products.find(x => !x.filled);
-  if(empty) editProduct(empty.id);
-  else alert('كل الأماكن ممتلئة!');
-}
-
-function saveProduct() {
-  const p = products.find(x => x.id === editId);
-  p.name = document.getElementById('f_name').value;
-  p.desc = document.getElementById('f_desc').value;
-  p.image = document.getElementById('f_url').value;
-  p.oldPrice = parseFloat(document.getElementById('f_old').value) || 0;
-  p.newPrice = parseFloat(document.getElementById('f_new').value) || 0;
-  p.filled = (p.name && p.newPrice > 0);
-  localStorage.setItem('huroofi_products', JSON.stringify(products));
-  renderProducts(); renderAdminList(); switchTab('list');
-  alert('تم الحفظ!');
-}
-
-function saveSettings() {
-  settings.primary = document.getElementById('set_primary').value;
-  settings.rateSAR = parseFloat(document.getElementById('set_sar').value);
-  settings.rateYER = parseFloat(document.getElementById('set_yer').value);
-  localStorage.setItem('huroofi_settings', JSON.stringify(settings));
-  applyTheme(); renderProducts(); alert('تم حفظ الإعدادات!');
-}
-
-function generateCode() {
-  const code = `const DEFAULT_PRODUCTS = ${JSON.stringify(products)};\nconst DEFAULT_SETTINGS = ${JSON.stringify(settings)};`;
-  const ta = document.getElementById('codeText');
-  ta.value = code; ta.style.display = 'block'; ta.select();
-  document.execCommand('copy');
-  alert('تم نسخ الكود!');
-}
-</script>
-</body>
-</html>
+function copy
